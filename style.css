@@ -1,21 +1,79 @@
-/* style.css */
+/* style.css - Custom styles for AI Wallet Analyzer */
 
-/* Stili Custom */
-body { font-family: 'Inter', sans-serif; } /* Assumi font via Google Fonts – aggiungi <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"> nell'head se non caricato */
+/* Font and Base */
+body {
+    font-family: 'Inter', sans-serif;
+}
 
-.analyze-btn { transition: all 0.3s; }
-.analyze-btn:hover { transform: translateY(-2px); }
+/* Analyze Button */
+.analyze-btn {
+    transition: all 0.3s ease;
+}
+.analyze-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
 
-.step-number { font-size: 1.25rem; }
+/* Step Numbers */
+.step-number {
+    font-size: 1.25rem;
+    transition: background-color 0.3s;
+}
+.step-number:hover {
+    background-color: #4b5563; /* Gray hover for subtlety */
+}
 
-.loader { border: 4px solid #f3f3f3; border-top: 4px solid #6366f1; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto; }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+/* Loader Spinner */
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #374151;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-/* Responsive Aggiuntivi */
+/* Hover Effects Subtle */
+.feature-item:hover,
+.blog-post:hover,
+.team-member:hover,
+.testimonial:hover,
+.faq-item:hover {
+    transform: translateY(-3px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Soft shadow */
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
     .grid-cols-1 { grid-template-columns: 1fr; }
     .container { padding: 0 1rem; }
+    nav { flex-direction: column; space-y-4; } /* For mobile menu */
 }
 
-/* Hover Effects */
-.feature-item:hover, .blog-post:hover, .team-member:hover { transform: translateY(-5px); transition: transform 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+/* Modal Styles */
+#analysis-modal,
+#blog-modal,
+#trustpilot-modal,
+#privacy-modal,
+#terms-modal {
+    transition: opacity 0.3s ease;
+}
+#analysis-modal .bg-white,
+#blog-modal .bg-white,
+#trustpilot-modal .bg-white,
+#privacy-modal .bg-white,
+#terms-modal .bg-white {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+/* Testimonials and Badges */
+.testimonial img {
+    border: 2px solid #e5e7eb; /* Soft border for realism */
+}
